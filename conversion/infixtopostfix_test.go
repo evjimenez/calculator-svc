@@ -18,6 +18,16 @@ func TestInfixToPostfix(t *testing.T) {
 			infix:   "1 + 2.5 / 3 * 4",
 			postfix: "12.53/4*+",
 		},
+		{
+			name:    "Test Infix To Postfix Empty Expression",
+			infix:   "",
+			wantErr: ErrInvalidExpression,
+		},
+		{
+			name:    "Test Infix To Postfix negative Expression",
+			infix:   "-6+8",
+			wantErr: ErrInvalidNegativeNumber,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -49,7 +59,7 @@ func TestTokenization(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := Tokenization(tt.infix)
+			result, err := tokenization(tt.infix)
 			if err != tt.wantErr {
 				t.Errorf("Want: %v , got %v", tt.infixResult, result)
 			}
